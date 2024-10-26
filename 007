@@ -1,0 +1,336 @@
+import random 
+ammo = 0
+ammo2 = 0
+shieldcount = 0
+shieldcount2 = 0
+
+def opponentMove(x,y):
+  global ammo
+  global ammo2
+  global shieldcount2
+  if ammo2 == 0:
+    if ammo == 0:
+      if x == 1:
+        if y == 1:
+          ammo += 1
+        ammo2 += 1
+        print("Your opponent reloads.")
+        shieldcount2 = 0
+        roundFunction()
+      elif x == 2:
+        ammo2 += 1
+        print("Your opponent reloads.")
+        shieldcount2 = 0
+        roundFunction()
+    elif ammo > 0:
+      shieldorR = random.randrange(2)
+      if shieldorR == 0:
+        if shieldcount2 >= 2:
+          cannotShield(x,y)
+        else:
+          if x == 1:
+            if y == 1:
+              ammo += 1
+            print("Your opponent uses shield.")
+            shieldcount2 += 1
+            roundFunction()
+          elif x == 2:
+            print("Your opponent uses shield.")
+            shieldcount2 += 1
+            roundFunction()
+          elif x == 3:
+            ammo -= 1
+            print("Your opponent uses shield and deflects your bullet.")
+            shieldcount2 += 1
+            roundFunction()
+      elif shieldorR == 1:
+        if x == 1:
+          if y == 1:
+            ammo += 1
+          ammo2 += 1
+          print("Your opponent reloads.")
+          shieldcount2 = 0
+          roundFunction()
+        elif x == 2:
+          ammo2 += 1
+          print("Your opponent reloads.")
+          shieldcount2 = 0
+          roundFunction()
+        elif x == 3:
+          print("The opponent reloads.")
+          shieldcount2 = 0
+          print("YOU WIN!")
+          start()
+  elif ammo2 == 1:
+    if ammo == 0:
+      gunorR = random.randrange(2)
+      if gunorR == 0:
+        if x == 1:
+          if y == 1:
+            ammo += 1
+          print("Your opponent shoots and kills you.")
+          shieldcount2 = 0
+          print("YOU LOSE")
+          start()
+        elif x == 2:
+          ammo2 -= 1
+          print("Your opponent shoots but you block their bullet.")
+          shieldcount2 = 0
+          roundFunction()
+      elif gunorR == 1:
+        if x == 1:
+          if y == 1:
+            ammo += 1
+          ammo2 += 1
+          print("Your opponent reloads.")
+          shieldcount2 = 0
+          roundFunction()
+        elif x == 2:
+          ammo2 += 1
+          print("Your opponent reloads.")
+          shieldcount2 = 0
+          roundFunction()
+    elif ammo == 1:
+      gunorShield = random.randrange(2)
+      if gunorShield == 0:
+        if x == 1:
+          print("Your opponent shoots and kills you.")
+          shieldcount2 = 0
+          print("YOU LOSE")
+          start()
+        elif x == 2:
+          ammo2 -= 1
+          print("Your opponent shoots but you block their bullet.")
+          shieldcount2 = 0
+          roundFunction()
+        elif x == 3:
+          ammo2 -= 1
+          ammo -= 1
+          print("Both of you shoot at each other and your bullets deflect off of each other.")
+          shieldcount2 = 0
+          roundFunction()
+      else:
+        if shieldcount2 >= 2:
+          cannotShield(x,y)
+        else:
+          if x == 1:
+            if y == 1:
+              ammo += 1
+            print("Your opponent uses shield.")
+            shieldcount2 += 1
+            roundFunction()
+          elif x == 2:
+            print("Your opponent uses shield.")
+            shieldcount2 += 1
+            roundFunction()
+          elif x == 3:
+            ammo -= 1
+            print("Your opponent uses shield and deflects your bullet.")
+            shieldcount2 += 1
+            roundFunction()
+    elif ammo > 1:
+        gunorShield = random.randrange(2)
+        if gunorShield == 0:
+          if x == 1:
+            print("Your opponent shoots and kills you.")
+            shieldcount2 = 0
+            print("YOU LOSE")
+            start()
+          elif x == 2:
+            ammo2 -= 1
+            print("Your opponent shoots but you block their bullet.")
+            shieldcount2 = 0
+            roundFunction()
+          elif x == 3:
+            ammo2 -= 1
+            ammo -= 1
+            print("Both of you shoot at each other and your bullets deflect off of each other.")
+            shieldcount2 = 0
+            roundFunction()
+        else:
+          if shieldcount2 >= 2:
+            cannotShield(x,y)
+          else:
+            if x == 1:
+              if y == 1:
+                ammo += 1
+              print("Your opponent uses shield.")
+              shieldcount2 += 1
+              roundFunction()
+            elif x == 2:
+              print("Your opponent uses shield.")
+              shieldcount2 += 1
+              roundFunction()
+            elif x == 3:
+              ammo -= 1
+              print("Your opponent uses shield and deflects your bullet.")
+              shieldcount2 += 1
+              roundFunction()
+  else:
+    if ammo > ammo2:
+      if shieldcount2 >= 2:
+        cannotShield(x,y)
+      else:
+        if x == 1:
+          if y == 1:
+            ammo += 1
+          print("Your opponent uses shield.")
+          shieldcount2 += 1
+          roundFunction()
+        elif x == 2:
+          print("Your opponent uses shield.")
+          shieldcount2 += 1
+          roundFunction()
+        elif x == 3:
+          ammo -= 1
+          print("Your opponent uses shield and deflects your bullet.")
+          shieldcount2 += 1
+          roundFunction()
+    else:
+      if x == 1:
+        print("Your opponent shoots and kills you.")
+        shieldcount2 = 0
+        print("YOU LOSE")
+        start()
+      elif x == 2:
+        ammo2 -= 1
+        print("Your opponent shoots but you block their bullet.")
+        shieldcount2 = 0
+        roundFunction()
+      elif x == 3:
+        ammo2 -= 1
+        ammo -= 1
+        print("Both of you shoot at each other and your bullets deflect off of each other.")
+        shieldcount2 = 0
+        roundFunction()
+
+def roundFunction():
+  global ammo
+  global ammo2
+  global shieldcount
+  visAmmo = ammo + 1
+  ammoString = str(visAmmo)
+  print("")
+  print("Do your next move.")
+  move = input()
+  if move == "1":
+    print("You used Reload. Ammo: " + ammoString)
+    shieldcount = 0
+    opponentMove(1,1)
+  elif move == "2":
+    if shieldcount >= 2:
+      print("You cannot use shield more than 2 times in a row.")
+      roundFunction()
+    else:
+      print("You used Shield.")
+      shieldcount += 1
+      opponentMove(2,1)
+  elif move == "3":
+    shieldcount = 0
+    if ammo == 0:
+      print("You have no ammo!")
+      opponentMove(1,2)
+    else:
+      print("You used Gun.")
+      opponentMove(3,1)
+  else:
+    print("Error, please retry.")
+    roundFunction()
+
+
+def cannotShield(x,y):
+  global ammo
+  global ammo2
+  global shieldcount2
+  shieldcount2 = 0
+  if ammo2 == 0:
+    if x == 1:
+      if y == 1:
+        ammo += 1
+      ammo2 += 1
+      print("Your opponent reloads.")
+      roundFunction()
+    if x == 2:
+      ammo2 += 1
+      print("Your opponent reloads.")
+      roundFunction()
+    if x == 3:
+      print("The opponent reloads.")
+      print("YOU WIN!")
+      start()
+  else:
+    if ammo >= ammo2:
+      if x == 1:
+        print("Your opponent shoots and kills you.")
+        print("YOU LOSE")
+        start()
+      elif x == 2:
+        ammo2 -= 1
+        print("Your opponent shoots but you block their bullet.")
+        roundFunction()
+      elif x == 3: 
+        ammo2 -= 1
+        ammo -= 1
+        print("Both of you shoot at each other and your bullets deflect off of each other.")
+        roundFunction()
+    else:
+      gunorR = random.randrange(2)
+      if gunorR == 0:
+        if x == 1:
+          print("Your opponent shoots and kills you.")
+          print("YOU LOSE")
+          start()
+        elif x == 2:
+          ammo2 -= 1
+          print("Your opponent shoots but you block their bullet.")
+          roundFunction()
+        elif x == 3: 
+          ammo2 -= 1
+          ammo -= 1
+          print("Both of you shoot at each other and your bullets deflect off of each other.")
+          roundFunction()
+      else:
+        if x == 1:
+          if y == 1:
+            ammo += 1
+          ammo2 += 1
+          print("Your opponent reloads.")
+          roundFunction()
+        elif x == 2:
+          ammo2 += 1
+          print("Your opponent reloads.")
+          roundFunction()
+        elif x == 3:
+          print("The opponent reloads.")
+          print("YOU WIN!")
+          start()
+print("This is 007/Load Shoot Shield. The goal of the game is to kill your opponent with your gun. You have 3 moves you can do, Reload, Shield, Shoot. In order to shoot your gun, you need to reload. Your gun has an infinite capacity of ammo, for example you are allowed to reload 3 times then shoot 3 times in a row. If you shield on your turn,you will not die if your opponent shoots a gun. But you can only shield 2 times in a row before you must do another move. If you shoot your gun while you have ammo and the opponent reloads, you win. If they shield or shoot their gun, nothing happens.")
+print("")
+print("Here are the controls: When prompted to do your move, press 1 to reload, 2 to use your shield, 3 to use your gun.")
+
+def tutorial ():
+  print("This is 007/Load Shoot Shield. The goal of the game is to kill your opponent with your gun. You have 3 moves you can do, Reload, Shield, Shoot. In order to shoot your gun, you need to reload. Your gun has an infinite capacity of ammo, for example you are allowed to reload 3 times then shoot 3 times in a row. If you shield on your turn,you will not die if your opponent shoots a gun. But you can only shield 2 times in a row before you must do another move. If you shoot your gun while you have ammo and the opponent reloads, you win. If they shield or shoot their gun, nothing happens.")
+  print("")
+  print("Here are the controls: When prompted to do your move, press 1 to reload, 2 to use your shield, 3 to use your gun.")
+  start()
+
+print("")
+def start():
+  global ammo
+  global ammo2
+  ammo2 = 0
+  ammo = 0
+  print("")
+  print("Type 'start' to start. Type 'Tutorial' for the tutorial again.")
+  start = input()
+  if start == "start" or start == "Start":
+    roundFunction()
+  elif start == "tutorial" or start == "Tutorial":
+    tutorial()
+  else:
+    print("Error, please type 'start'")
+    start()
+start()
+
+
+
